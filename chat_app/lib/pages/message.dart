@@ -1,6 +1,7 @@
 import 'package:chat_app/component/color.dart';
-import 'package:chat_app/component/search_field_for_text.dart';
+import 'package:chat_app/component/search_text.dart';
 import 'package:chat_app/component/serchButton.dart';
+import 'package:chat_app/pages/account.dart';
 import 'package:chat_app/pages/chat_page.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ class Message extends StatefulWidget {
 }
 
 class _MessageState extends State<Message> {
+  bool isSearch = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,24 +25,31 @@ class _MessageState extends State<Message> {
             child: Center(
                 child: GestureDetector(
                     onTap: () {
-                      print('hello');
-                      SearchFieldForText();
-                      setState(() {});
+                      setState(() {
+                        isSearch = !isSearch;
+                      });
                     },
                     child: const SearchButton())),
           ),
           centerTitle: true,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Text(
-              'Calls',
-              style: TextStyle(color: mycolor2),
-            ),
-          ),
+          title: isSearch
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  child: Text(
+                    'Calls',
+                    style: TextStyle(color: mycolor2),
+                  ),
+                )
+              : SearchText(),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10.0, top: 15),
-              child: Image.asset('assets/images/profile.png'),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Account()));
+                  },
+                  child: Image.asset('assets/images/profile.png')),
             )
           ],
         ),

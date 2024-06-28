@@ -1,4 +1,4 @@
-import 'package:chat_app/component/search_field_for_text.dart';
+import 'package:chat_app/component/chat_text.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
@@ -46,7 +46,7 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Stack(
         children: [
-          Positioned(bottom: 0, left: 0, right: 0, child: SearchFieldForText()),
+          Positioned(bottom: 0, left: 0, right: 0, child: ChatText()),
         ],
       ),
     );

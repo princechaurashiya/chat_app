@@ -1,5 +1,6 @@
 import 'package:chat_app/component/color.dart';
 import 'package:chat_app/pages/calls.dart';
+import 'package:chat_app/pages/contects.dart';
 import 'package:chat_app/pages/message.dart';
 import 'package:chat_app/pages/setting.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static const List<Widget> _widgetOptions = <Widget>[
     Message(),
     Calls(),
-    Text('Contacts',
-        style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+    Contects(),
     Setting(),
   ];
 

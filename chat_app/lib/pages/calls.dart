@@ -1,4 +1,5 @@
 import 'package:chat_app/component/color.dart';
+import 'package:chat_app/component/search_text.dart';
 import 'package:chat_app/component/serchButton.dart';
 import 'package:chat_app/pages/chat_page.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class Calls extends StatefulWidget {
 }
 
 class _CallsState extends State<Calls> {
+  bool isSearch = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,16 +21,25 @@ class _CallsState extends State<Calls> {
           backgroundColor: Colors.black,
           leading: Padding(
             padding: const EdgeInsets.only(left: 15.0, top: 15),
-            child: Center(child: const SearchButton()),
+            child: Center(
+                child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isSearch = !isSearch;
+                      });
+                    },
+                    child: const SearchButton())),
           ),
           centerTitle: true,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Text(
-              'Calls',
-              style: TextStyle(color: mycolor2),
-            ),
-          ),
+          title: isSearch
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  child: Text(
+                    'Calls',
+                    style: TextStyle(color: mycolor2),
+                  ),
+                )
+              : SearchText(),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10.0, top: 15),

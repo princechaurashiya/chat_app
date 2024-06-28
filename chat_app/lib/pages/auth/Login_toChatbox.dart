@@ -2,6 +2,7 @@ import 'package:chat_app/component/button.dart';
 import 'package:chat_app/component/color.dart';
 import 'package:chat_app/component/inputText.dart';
 import 'package:chat_app/pages/auth/sign_up_page.dart';
+import 'package:chat_app/pages/btm_nav_bar.dart';
 import 'package:chat_app/pages/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,21 @@ class _LoginTochatboxState extends State<LoginTochatbox> {
 
     emailController.dispose();
     paswordController.dispose();
+  }
+
+  void login() {
+    _auth
+        .signInWithEmailAndPassword(
+            email: emailController.text,
+            password: paswordController.text.toString())
+        .then((value) {
+      Utils().tostMessage(value.user!.email.toString());
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => BottomNavBar()));
+    }).onError((error, StackTrace) {
+      debugPrint(error.toString());
+      Utils().tostMessage(error.toString());
+    });
   }
 
   @override
@@ -134,14 +150,11 @@ class _LoginTochatboxState extends State<LoginTochatbox> {
                 onTap: () {
                   print('Helo');
                   if (_fromKey.currentState!.validate()) {
-                    _auth
-                        .createUserWithEmailAndPassword(
-                            email: emailController.text.toString(),
-                            password: paswordController.text.toString())
-                        .then((value) {})
-                        .onError((error, StackTrace) {
-                      Utils().tostMessage(error.toString());
-                    });
+                    login();
+                    //     .then((value) {})
+                    //     .onError((error, StackTrace) {
+                    //   Utils().tostMessage(error.toString());
+                    // });
                   }
                 },
                 child: Button(
