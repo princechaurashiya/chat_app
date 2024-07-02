@@ -20,6 +20,8 @@ class _LoginTochatboxState extends State<LoginTochatbox> {
   final emailController = TextEditingController();
   final paswordController = TextEditingController();
 
+  bool loading = false;
+
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -31,6 +33,9 @@ class _LoginTochatboxState extends State<LoginTochatbox> {
   }
 
   void login() {
+    setState(() {
+      loading = true;
+    });
     _auth
         .signInWithEmailAndPassword(
             email: emailController.text,
@@ -42,7 +47,14 @@ class _LoginTochatboxState extends State<LoginTochatbox> {
     }).onError((error, StackTrace) {
       debugPrint(error.toString());
       Utils().tostMessage(error.toString());
-    });
+      setState(() {
+        loading = false;
+      });
+    }).onError(
+      (error, stackTrace) {
+        Utils().tostMessage(error.toString());
+      },
+    );
   }
 
   @override
@@ -158,6 +170,7 @@ class _LoginTochatboxState extends State<LoginTochatbox> {
                   }
                 },
                 child: Button(
+                    loading: loading,
                     // color: Color(0xffF3F6F6),
                     color: mycolor1,
                     text: 'Log in',

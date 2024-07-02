@@ -1,6 +1,9 @@
 import 'package:chat_app/component/color.dart';
 import 'package:chat_app/component/search_text.dart';
 import 'package:chat_app/component/serchButton.dart';
+import 'package:chat_app/pages/auth/Login_toChatbox.dart';
+import 'package:chat_app/pages/utils/utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Setting extends StatefulWidget {
@@ -11,6 +14,7 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  final auth = FirebaseAuth.instance;
   bool isSearch = true;
   @override
   Widget build(BuildContext context) {
@@ -138,6 +142,34 @@ class _SettingState extends State<Setting> {
                           leading: Icon(Icons.person_2_outlined),
                           title: Text('Invite a friend'),
                           // subtitle: Text('Privacy,Security, change number'),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            auth.signOut().then((value) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginTochatbox()));
+                            }).onError(
+                              (error, stackTrace) {
+                                Utils().tostMessage(error.toString());
+                              },
+                            );
+                          },
+                          child: const ListTile(
+                            leading: Icon(
+                              Icons.login_outlined,
+                              color: Colors.red,
+                            ),
+                            title: Text(
+                              'LogOut',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            // subtitle: Text('Privacy,Security, change number'),
+                          ),
                         ),
                       ),
                     ],

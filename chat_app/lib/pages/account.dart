@@ -1,6 +1,8 @@
+import 'package:chat_app/component/button.dart';
 import 'package:chat_app/component/color.dart';
 import 'package:chat_app/component/inputText.dart';
 import 'package:chat_app/pages/utils/pick_image.dart';
+import 'package:chat_app/resources/add_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,8 +26,17 @@ class _AccountState extends State<Account> {
     });
   }
 
+  void saveProfile() async {
+    String name = nameController.text;
+    String bio = bioController.text;
+    String resp =
+        await StoreData().saveData(name: name, bio: bio, file: _image!);
+  }
+
   @override
   Widget build(BuildContext context) {
+    double screen_height = MediaQuery.of(context).size.height;
+    double screen_width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -84,7 +95,21 @@ class _AccountState extends State<Account> {
                   h_text: 'Bio',
                   controller: bioController,
                   key_board_type: TextInputType.text),
-            )
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {
+                saveProfile();
+              },
+              child: Button(
+                  // color: Color(0xffF3F6F6),
+                  color: mycolor1,
+                  text: 'Log in',
+                  height: screen_height * 0.05,
+                  width: screen_width * 0.4),
+            ),
           ],
         ),
       ),
